@@ -22,13 +22,13 @@ def get_body(tweet):
                         '<img src="{tweet.author.profile_image_url}"/>'
                         '{tweet.author.name} (@{tweet.author.screen_name})'
                     '</a>:<br/>'
-                    '<blockqoute>'
+                    '<blockquote>'
                         '<a href="https://twitter.com/{tweet.retweeted_status.author.screen_name}">'
                             '<img src="{tweet.retweeted_status.author.profile_image_url}"/>'
                             '{tweet.retweeted_status.author.name} (@{tweet.retweeted_status.author.screen_name})'
                         '</a>:<br/>'
                         '{body}'
-                    '</blockqoute>')
+                    '</blockquote>')
         body = tweet.retweeted_status.text
     else:
         template = ('<a href="https://twitter.com/{tweet.author.screen_name}">'
