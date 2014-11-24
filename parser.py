@@ -18,8 +18,23 @@ def get_title(tweet):
 
 def get_body(tweet):
     if getattr(tweet, 'retweeted_status', None):
-        body = 'RT @{}: {}'.format(tweet.retweeted_status.author.screen_name, tweet.retweeted_status.text)
+        template = ('retweeted <a href="https://twitter.com/{tweet.author.screen_name}">'
+                        '<img src="{tweet.author.profile_image_url}"/>'
+                        '{tweet.author.name} (@{tweet.author.screen_name})'
+                    '</a>:<br/>'
+                    '<blockqoute>'
+                        '<a href="https://twitter.com/{tweet.retweeted_status.author.screen_name}">'
+                            '<img src="{tweet.retweeted_status.author.profile_image_url}"/>'
+                            '{tweet.retweeted_status.author.name} (@{tweet.retweeted_status.author.screen_name})'
+                        '</a>:<br/>'
+                        '{body}'
+                    '</blockqoute>')
+        body = tweet.retweeted_status.text
     else:
+        template = ('<a href="https://twitter.com/{tweet.author.screen_name}">'
+                        '<img src="{tweet.author.profile_image_url}"/>'
+                        '{tweet.author.name} (@{tweet.author.screen_name})'
+                    '</a>:<br/>{body}')
         body = tweet.text
 
     for symbol in tweet.entities.get('symbols', []):
@@ -45,7 +60,7 @@ def get_body(tweet):
     if extra_keys:
         current_app.logger.info('tweet replacing: other: {}'.format(extra_keys))
 
-    return body
+    return template.format(tweet=tweet, body=body)
 
 
 def get_url(tweet):
