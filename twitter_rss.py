@@ -19,7 +19,7 @@ def home():
 
 @app.route('/timeline.atom')
 def feed():
-    feed = AtomFeed(app.config.get('FEED_TITLE', 'twitter'), feed_url=request.url, url=request.url_root, icon=url_for('favicon'))
+    feed = AtomFeed(app.config.get('FEED_TITLE') or 'twitter', feed_url=request.url, url=request.url_root, icon=url_for('favicon'))
     for tweet in get_tweets(current_app.config):
         feed.add(title=get_title(tweet), content=get_body(tweet), content_type='html', url=get_url(tweet),
                  published=tweet.created_at, updated=tweet.created_at)
