@@ -1,4 +1,4 @@
-import logging
+import logging.handlers
 
 from flask import Flask, request, Response, url_for, current_app, redirect
 from werkzeug.contrib.atom import AtomFeed
@@ -8,8 +8,14 @@ from parser import get_tweets, get_title, get_body, get_url, get_icon
 
 app = Flask(__name__)
 app.config.from_object('settings')
-app.logger.addHandler(logging.StreamHandler())
-app.logger.setLevel(logging.INFO)
+
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.INFO)
+app.logger.addHandler(stream_handler)
+
+smtp_handler = logging.handlers.SMTPHandler(**app.config.ERROR_EMAIL)
+smtp_handler.setLevel(logging.ERROR)
+app.logger.addHandler(smtp_handler)
 
 
 @app.route('/')
