@@ -5,9 +5,10 @@ ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET = ''
 
 ERROR_EMAIL = {
-    'mailhost': '',
+    'mailhost': ('', ''),
     'fromaddr': '',
     'toaddrs': [''],
     'subject': 'Twitter RSS error',
     'credentials': ('', ''),
+    'secure': (),
 }

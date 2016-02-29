@@ -13,7 +13,7 @@ stream_handler = logging.StreamHandler()
 stream_handler.setLevel(logging.INFO)
 app.logger.addHandler(stream_handler)
 
-smtp_handler = logging.handlers.SMTPHandler(**app.config.ERROR_EMAIL)
+smtp_handler = logging.handlers.SMTPHandler(**app.config['ERROR_EMAIL'])
 smtp_handler.setLevel(logging.ERROR)
 app.logger.addHandler(smtp_handler)
 
